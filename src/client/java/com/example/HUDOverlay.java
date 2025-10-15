@@ -1,4 +1,3 @@
-/* Renders the main OPMod HUD overlay with dynamic text alignment and consistent styling */
 package com.example;
 
 import com.example.config.ConfigManager;
@@ -11,70 +10,64 @@ import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-import java.io.ObjectInputFilter;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class HUDOverlay {
+
     public static int HUD_WIDTH = 150;
     public static int HUD_HEIGHT = 6;
     public static final int PADDING = 5;
     public static final int LINE_HEIGHT = 10;
 
     private static boolean alignRight;
-    public static int hudX;
-    public static int hudY;
-
 
     public static void init() {
         ConfigManager.load();
-        hudX = ConfigManager.get().hudX;
-        hudY = ConfigManager.get().hudY;
-         HudRenderCallback.EVENT.register(HUDOverlay::renderHUD);
+        HudRenderCallback.EVENT.register(HUDOverlay::renderHUD);
     }
 
     public static void setAlignmentByPosition(int screenWidth) {
-        alignRight = hudX + HUD_WIDTH / 2 >= screenWidth / 2;
+        alignRight = ConfigManager.get().hudX + HUD_WIDTH / 2 >= screenWidth / 2;
     }
 
-
-    /** Renders the HUD overlay. Public for UIEditorScreen access. */
     public static void renderHUD(DrawContext ctx, RenderTickCounter tickCounter) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null || client.options.hudHidden) return;
 
-        if (!ConfigManager.get().showHUD) return;
+        var cfg = ConfigManager.get();
+        if (!cfg.showHUD) return;
 
         TextRenderer tr = client.textRenderer;
-        int x = hudX;
-        int y = hudY;
+        int x = cfg.hudX;
+        int y = cfg.hudY;
 
         List<Text> lines = new ArrayList<>();
-
         HUD_HEIGHT = 6;
 
-        if (ConfigManager.get().showJob) {
+        if (cfg.showJob) {
             HUD_HEIGHT += 10;
             lines.add(Text.literal("Aktueller Job: ").formatted(Formatting.GRAY)
                     .append(Text.literal(JobData.jobName).formatted(Formatting.AQUA)));
         }
 
-        if (ConfigManager.get().showLevel) {
+        if (cfg.showLevel) {
             HUD_HEIGHT += 10;
             lines.add(formatLine("Level", String.valueOf(JobData.level)));
         }
 
-        if (ConfigManager.get().showFortschritt) {
+        if (cfg.showFortschritt) {
             HUD_HEIGHT += 10;
             lines.add(formatLine("Fortschritt", String.format("%.2f%%", JobData.percent) + " " +
                     buildProgressBar(JobData.percent)));
         }
 
-        if (ConfigManager.get().showTrackingZeit) {
+        if (cfg.showTrackingZeit) {
             HUD_HEIGHT += 10;
             lines.add(formatLine("Tracking Zeit", TimeTracker.getFormattedTime()));
         }
-        if (ConfigManager.get().showTimeUntilLevelUp) {
+
+        if (cfg.showTimeUntilLevelUp) {
             HUD_HEIGHT += 10;
             double xpPerLevel = 2_500_000;
             double currentXpInLevel = (JobData.percent / 100.0) * xpPerLevel;
@@ -97,34 +90,32 @@ public final class HUDOverlay {
             lines.add(formatLine("Zeit bis Level Up", formattedTime));
         }
 
-        if (ConfigManager.get().showGeld) {
+        if (cfg.showGeld) {
             HUD_HEIGHT += 10;
             lines.add(formatLine("Geld", String.format("%,.2f", JobData.money)));
         }
 
-        if (ConfigManager.get().showGeldProStunde) {
+        if (cfg.showGeldProStunde) {
             HUD_HEIGHT += 10;
             lines.add(formatLine("Geld/h", String.format("%,.2f", (TimeTracker.getTime() > 0)
                     ? (JobData.money / TimeTracker.getTime() * 3600) : 0)));
         }
 
-        if (ConfigManager.get().showXP) {
+        if (cfg.showXP) {
             HUD_HEIGHT += 10;
             lines.add(formatLine("XP", String.format("%,.2f", JobData.xp)));
         }
 
-        if (ConfigManager.get().showXPProStunde) {
+        if (cfg.showXPProStunde) {
             HUD_HEIGHT += 10;
             lines.add(formatLine("XP/h", String.format("%,.2f", (TimeTracker.getTime() > 0)
                     ? (JobData.xp / TimeTracker.getTime() * 3600) : 0)));
         }
 
-        if (ConfigManager.get().showYaw) {
+        if (cfg.showYaw) {
             HUD_HEIGHT += 10;
             lines.add(formatLine("Yaw", String.format("%.2f°", client.player.getYaw())));
         }
-
-
 
         ctx.fill(x - PADDING, y - PADDING, x + HUD_WIDTH, y + HUD_HEIGHT, 0x88000000);
 
