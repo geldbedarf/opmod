@@ -1,6 +1,7 @@
 package com.example;
 
 import com.example.commands.TrackerCommand;
+import com.example.ui.HUDOverlay;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 

@@ -1,5 +1,6 @@
-package com.example;
+package com.example.ui;
 
+import com.example.TimeTracker;
 import com.example.config.ConfigManager;
 import com.example.jobsystem.tracking.JobData;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
