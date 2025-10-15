@@ -1,6 +1,5 @@
 package com.example.mixin.client;
 
-import com.example.HUDOverlay;
 import com.example.TimeTracker;
 import com.example.jobsystem.tracking.JobData;
 import net.minecraft.client.network.ClientPlayNetworkHandler;

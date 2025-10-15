@@ -21,7 +21,8 @@ public class TrackerCommand {
 
     public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher) {
         LiteralCommandNode<FabricClientCommandSource> register = dispatcher.register(
-                ClientCommandManager.literal("tracker")
+                ClientCommandManager.literal("opmod")
+                    .then(ClientCommandManager.literal("tracker")
 
                         // -----------------------------
                         // /tracker reset
@@ -53,6 +54,20 @@ public class TrackerCommand {
                         // /tracker display <option> <true|false>
                         // -----------------------------
                         .then(ClientCommandManager.literal("display")
+                                .then(ClientCommandManager.literal("DEFAULT")
+                                        .executes(context -> {
+                                            display(context, "Job", true);
+                                            display(context, "Level", true);
+                                            display(context, "Fortschritt", true);
+                                            display(context, "TrackingZeit", true);
+                                            display(context, "ZeitBisLevelUp", false);
+                                            display(context, "Geld", true);
+                                            display(context, "GeldProStunde", true);
+                                            display(context, "Geld", true);
+                                            display(context, "GeldProStunde", true);
+                                            display(context, "Yaw", false);
+                                            return 1;
+                                        }))
                                 .then(ClientCommandManager.literal("Job")
                                         .then(ClientCommandManager.argument("value", BoolArgumentType.bool())
                                                 .executes(context -> display(context, "Job", BoolArgumentType.getBool(context, "value")))))
@@ -80,12 +95,15 @@ public class TrackerCommand {
                                 .then(ClientCommandManager.literal("XPProStunde")
                                         .then(ClientCommandManager.argument("value", BoolArgumentType.bool())
                                                 .executes(context -> display(context, "XPProStunde", BoolArgumentType.getBool(context, "value")))))
+                                .then(ClientCommandManager.literal("Yaw")
+                                        .then(ClientCommandManager.argument("value", BoolArgumentType.bool())
+                                                .executes(context -> display(context, "Yaw", BoolArgumentType.getBool(context, "value")))))
                         )
 
                         // -----------------------------
-                        // /tracker showHUD <on|off>
+                        // /tracker enable <on|off>
                         // -----------------------------
-                        .then(ClientCommandManager.literal("showHUD")
+                        .then(ClientCommandManager.literal("enable")
                                 .then(ClientCommandManager.argument("value", BoolArgumentType.bool())
                                         .executes(context -> {
                                             boolean value = BoolArgumentType.getBool(context, "value");
@@ -109,7 +127,7 @@ public class TrackerCommand {
                                 )
                         )
 
-
+                    )
         );
     }
 
@@ -124,6 +142,7 @@ public class TrackerCommand {
             case "GeldProStunde" -> ConfigManager.get().showGeldProStunde = value;
             case "XP" -> ConfigManager.get().showXP = value;
             case "XPProStunde" -> ConfigManager.get().showXPProStunde = value;
+            case "Yaw" -> ConfigManager.get().showYaw = value;
         }
 
         ConfigManager.save();
