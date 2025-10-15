@@ -133,16 +133,16 @@ public class TrackerCommand {
 
     private static int display(com.mojang.brigadier.context.CommandContext<FabricClientCommandSource> context, String option, boolean value) {
         switch (option) {
-            case "Job" -> ConfigManager.get().showJob = value;
-            case "Level" -> ConfigManager.get().showLevel = value;
-            case "Fortschritt" -> ConfigManager.get().showFortschritt = value;
-            case "TrackingZeit" -> ConfigManager.get().showTrackingZeit = value;
-            case "ZeitBisLevelUp" -> ConfigManager.get().showTimeUntilLevelUp = value;
-            case "Geld" -> ConfigManager.get().showGeld = value;
-            case "GeldProStunde" -> ConfigManager.get().showGeldProStunde = value;
-            case "XP" -> ConfigManager.get().showXP = value;
-            case "XPProStunde" -> ConfigManager.get().showXPProStunde = value;
-            case "Yaw" -> ConfigManager.get().showYaw = value;
+            case "Job" -> ConfigManager.set("showJob", value);
+            case "Level" -> ConfigManager.set("showLevel", value);
+            case "Fortschritt" -> ConfigManager.set("showFortschritt", value);
+            case "TrackingZeit" -> ConfigManager.set("showTrackingZeit", value);
+            case "ZeitBisLevelUp" -> ConfigManager.set("showTimeUntilLevelUp", value);
+            case "Geld" -> ConfigManager.set("showGeld", value);
+            case "GeldProStunde" -> ConfigManager.set("showGeldProStunde", value);
+            case "XP" -> ConfigManager.set("showXP", value);
+            case "XPProStunde" -> ConfigManager.set("showXPProStunde", value);
+            case "Yaw" -> ConfigManager.set("Yaw", value);
         }
 
         ConfigManager.save();

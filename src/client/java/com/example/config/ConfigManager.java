@@ -61,6 +61,18 @@ public class ConfigManager {
         return config;
     }
 
+    public static void set(String fieldName, Object value) {
+        try {
+            var field = HUDConfig.class.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            field.set(config, value);
+            save();
+            System.out.println("[OPMod] Set " + fieldName + " = " + value);
+        } catch (Exception e) {
+            System.err.println("[OPMod] Could not set field '" + fieldName + "': " + e.getMessage());
+        }
+    }
+
     public static void setHUDPosition(int x, int y) {
         config.hudX = x;
         config.hudY = y;
