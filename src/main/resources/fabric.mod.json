@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "opmod",
+	"version": "${version}",
+	"name": "OPMOD",
+	"description": "Der OPMod erweitert OPSUCHT um einzigartige Features und Verbesserungen, die dein Spielerlebnis auf das nächste Level bringen.",
+	"authors": [
+		"Geldbedarf"
+	],
+	"license": "CC0-1.0",
+	"icon": "assets/opmod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+      "main": [
+        "com.example.OPMOD"
+      ],
+		"client": [
+          "com.example.OPMODClient"
+		]
+	},
+  "mixins": [
+    "opmod.mixins.json",
+    {
+      "config": "opmod.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+
+  "depends": {
+		"fabricloader": ">=0.17.2",
+		"minecraft": "~1.21.4",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+    "suggests": {
+        "another-mod": "*"
+    }
+}
