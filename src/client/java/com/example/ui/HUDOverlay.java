@@ -20,7 +20,6 @@ public final class HUDOverlay {
     public static int HUD_HEIGHT = 6;
     public static final int PADDING = 5;
     public static final int LINE_HEIGHT = 10;
-
     private static boolean alignRight;
 
     public static void init() {

@@ -1,4 +1,4 @@
-package com.example.ui;
+package com.example.ui.screens;
 
 import com.example.settings.Setting;
 import com.example.settings.SettingsManager;

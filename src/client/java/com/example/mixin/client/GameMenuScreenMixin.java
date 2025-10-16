@@ -1,7 +1,7 @@
 /* Injects "Chat" and "Settings" buttons into the Minecraft pause menu (GameMenuScreen) */
 package com.example.mixin.client;
 
-import com.example.ui.SettingsScreen;
+import com.example.ui.screens.SettingsScreen;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
