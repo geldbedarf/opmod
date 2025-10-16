@@ -13,20 +13,21 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 
 public class OPMODClient implements ClientModInitializer {
-    @Override
-    public void onInitializeClient() {
-        try {
-            PresenceBuilder.start();
-        } catch (NoDiscordClientException e) {
-            throw new RuntimeException(e);
-        }
+  @Override
+  public void onInitializeClient() {
+    try {
+      PresenceBuilder.start();
+    } catch (NoDiscordClientException e) {
+      throw new RuntimeException(e);
+    }
 
-        HUDOverlay.init();
+    HUDOverlay.init();
 
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
-            TrackerCommand.register(dispatcher);
+    ClientCommandRegistrationCallback.EVENT.register(
+        (dispatcher, registryAccess) -> {
+          TrackerCommand.register(dispatcher);
         });
 
-        System.out.println("OPMOD loaded");
-    }
+    System.out.println("OPMOD loaded");
+  }
 }
