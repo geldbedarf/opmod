@@ -1,4 +1,6 @@
 plugins {
+	id 'java'
+	id 'com.diffplug.spotless' version '6.23.3'
 	id 'fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 }
@@ -11,7 +13,7 @@ base {
 }
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 	jcenter()
 }
 
@@ -24,25 +26,32 @@ loom {
 			sourceSet sourceSets.client
 		}
 	}
+}
 
+spotless {
+	java {
+		googleJavaFormat()
+		target 'src/**/*.java'
+	}
+}
+
+tasks.named('build') {
+	dependsOn 'spotlessCheck'
 }
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation include('net.kyori:adventure-platform-fabric:6.3.0') // for MC Version 1.21.4
-    modImplementation 'net.kyori:adventure-api:4.17.0' // für Audiences in Prefix
+	modImplementation include('net.kyori:adventure-platform-fabric:6.3.0')
+	modImplementation 'net.kyori:adventure-api:4.17.0'
 	modImplementation include("io.github.cdagaming:DiscordIPC:0.10.6")
-
 }
 
 processResources {
 	inputs.property "version", project.version
-
 	filesMatching("fabric.mod.json") {
 		expand "version": inputs.properties.version
 	}
@@ -54,20 +63,17 @@ tasks.withType(JavaCompile).configureEach {
 
 java {
 	withSourcesJar()
-
 	sourceCompatibility = JavaVersion.VERSION_21
 	targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
 	inputs.property "archivesName", project.base.archivesName
-
 	from("LICENSE") {
-		rename { "${it}_${inputs.properties.archivesName}"}
+		rename { "${it}_${inputs.properties.archivesName}" }
 	}
 }
 
-// configure the maven publication
 publishing {
 	publications {
 		create("mavenJava", MavenPublication) {
@@ -76,7 +82,6 @@ publishing {
 		}
 	}
 
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 	repositories {
 
 	}
