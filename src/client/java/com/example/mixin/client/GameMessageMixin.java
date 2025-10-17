@@ -62,14 +62,13 @@ public class GameMessageMixin {
         JobData.percent = newPercent;
       }
 
-        if (message.contains("Holzfäller")) JobData.jobName = "Holzfäller";
-        else if (message.contains("Miner")) JobData.jobName = "Miner";
-        else if (message.contains("Fischer")) JobData.jobName = "Fischer";
-        else if (message.contains("Gräber")) JobData.jobName = "Gräber";
-        else if (message.contains("Jäger")) JobData.jobName = "Jäger";
-        else if (message.contains("Builder")) JobData.jobName = "Builder";
-        else if (message.contains("Farmer")) JobData.jobName = "Farmer";
-
+      if (message.contains("Holzfäller")) JobData.jobName = "Holzfäller";
+      else if (message.contains("Miner")) JobData.jobName = "Miner";
+      else if (message.contains("Fischer")) JobData.jobName = "Fischer";
+      else if (message.contains("Gräber")) JobData.jobName = "Gräber";
+      else if (message.contains("Jäger")) JobData.jobName = "Jäger";
+      else if (message.contains("Builder")) JobData.jobName = "Builder";
+      else if (message.contains("Farmer")) JobData.jobName = "Farmer";
     }
   }
 }
