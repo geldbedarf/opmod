@@ -12,7 +12,7 @@ base {
 
 repositories {
     mavenCentral()
-	jcenter()
+    jcenter()
 }
 
 loom {
@@ -36,7 +36,8 @@ dependencies {
 
     modImplementation include('net.kyori:adventure-platform-fabric:6.3.0') // for MC Version 1.21.4
     modImplementation 'net.kyori:adventure-api:4.17.0' // für Audiences in Prefix
-	modImplementation include("io.github.cdagaming:DiscordIPC:0.10.6")
+    modImplementation include("io.github.cdagaming:DiscordIPC:0.10.6")
+
 
 }
 
