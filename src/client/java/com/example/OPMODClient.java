@@ -5,6 +5,7 @@
 
 package com.example;
 
+import com.example.commands.SignProtection;
 import com.example.commands.TrackerCommand;
 import com.example.ui.HUDOverlay;
 import net.fabricmc.api.ClientModInitializer;
@@ -18,6 +19,10 @@ public class OPMODClient implements ClientModInitializer {
     ClientCommandRegistrationCallback.EVENT.register(
         (dispatcher, registryAccess) -> {
           TrackerCommand.register(dispatcher);
+        });
+    ClientCommandRegistrationCallback.EVENT.register(
+        (dispatcher, registryAccess) -> {
+          SignProtection.register(dispatcher);
         });
 
     System.out.println("OPMOD loaded");
