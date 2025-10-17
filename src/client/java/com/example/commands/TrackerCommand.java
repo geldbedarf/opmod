@@ -3,15 +3,11 @@ package com.example.commands;
 import com.example.TimeTracker;
 import com.example.config.ConfigManager;
 import com.example.jobsystem.tracking.JobData;
-import com.example.misc.Prefix;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.kyori.adventure.platform.modcommon.MinecraftClientAudiences;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 
@@ -38,21 +34,11 @@ public class TrackerCommand {
                                       JobData.level = 0;
                                       JobData.percent = 0;
 
-                                      Component adventureMsg =
-                                          Prefix.get()
-                                              .append(
-                                                  MiniMessage.miniMessage()
-                                                      .deserialize(
-                                                          "<green>Tracker wurde zurückgesetzt</green>"));
-
-                                      // In Minecraft Text umwandeln
-                                      Text mcText =
-                                          MinecraftClientAudiences.of().asNative(adventureMsg);
-
                                       // Nachricht an Spieler senden
-                                      MinecraftClient.getInstance()
-                                          .player
-                                          .sendMessage(mcText, false);
+                                      Text text =
+                                          Text.literal(
+                                              "§b§lOPMOD §8» §aJob-Tracker wurde erfolgreich zurückgesetzt.");
+                                      MinecraftClient.getInstance().player.sendMessage(text, false);
 
                                       return 1;
                                     }))
@@ -210,27 +196,18 @@ public class TrackerCommand {
                                             context -> {
                                               boolean value =
                                                   BoolArgumentType.getBool(context, "value");
-                                              ConfigManager.get().showHUD = value;
-
-                                              Component adventureMsg =
-                                                  Prefix.get()
-                                                      .append(
-                                                          MiniMessage.miniMessage()
-                                                              .deserialize(
-                                                                  "<gray>Tracker HUD wird nun </gray>"
-                                                                      + (value
-                                                                          ? "<green>eingeblendet</green>"
-                                                                          : "<red>ausgeblendet</red>")));
-
-                                              // In Minecraft Text umwandeln
-                                              Text mcText =
-                                                  MinecraftClientAudiences.of()
-                                                      .asNative(adventureMsg);
+                                              ConfigManager.set("showHUD", value);
 
                                               // Nachricht an Spieler senden
+                                              Text text =
+                                                  Text.literal(
+                                                      "§b§lOPMOD §8» §bJob-Tracker §7wird nun "
+                                                          + (value
+                                                              ? "§aeingeblendet"
+                                                              : "§causgeblendet"));
                                               MinecraftClient.getInstance()
                                                   .player
-                                                  .sendMessage(mcText, false);
+                                                  .sendMessage(text, false);
 
                                               return 1;
                                             })))));
@@ -253,23 +230,14 @@ public class TrackerCommand {
       case "Yaw" -> ConfigManager.set("Yaw", value);
     }
 
-    ConfigManager.save();
-
-    Component adventureMsg =
-        Prefix.get()
-            .append(
-                MiniMessage.miniMessage()
-                    .deserialize(
-                        "<gray>"
-                            + option
-                            + " wird nun </gray>"
-                            + (value ? "<green>eingeblendet</green>" : "<red>ausgeblendet</red>")));
-
-    // In Minecraft Text umwandeln
-    Text mcText = MinecraftClientAudiences.of().asNative(adventureMsg);
-
     // Nachricht an Spieler senden
-    MinecraftClient.getInstance().player.sendMessage(mcText, false);
+    Text text =
+        Text.literal(
+            "§b§lOPMOD §8» §b"
+                + option
+                + " §7wird nun "
+                + (value ? "§aeingeblendet" : "§causgeblendet"));
+    MinecraftClient.getInstance().player.sendMessage(text, false);
 
     return 1;
   }
