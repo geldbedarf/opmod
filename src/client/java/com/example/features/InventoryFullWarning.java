@@ -67,7 +67,9 @@ public class InventoryFullWarning {
     mc.inGameHud.setTitleTicks(0, 40, 0);
     mc.inGameHud.setTitle(Text.of("§cInventar voll!"));
 
-    mc.player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_PLING.value(), 1.0f, 1.2f);
+    if (ConfigManager.get().enableInvFullWarningSound) {
+      mc.player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_PLING.value(), 0.75f, 1.2f);
+    }
   }
 
   public void resetCooldown() {
