@@ -1,4 +1,3 @@
-/* Manages Discord Rich Presence connection and updates for OPMod, including automatic state changes based on game context */
 package com.example.misc;
 
 import com.google.gson.JsonObject;
@@ -13,17 +12,18 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.client.world.ClientWorld;
 
 public final class PresenceBuilder {
   private static IPCClient client;
-  private static final long APP_ID = 1426165744718053406L;
+  private static final long APP_ID = 1428151805879259156L;
   private static String currentState = "";
   private static String currentDetails = "";
   private static boolean connected = false;
+  private static long lastUpdate = 0;
 
-  public static void start() throws NoDiscordClientException {
+  public static void start() {
     if (client != null) return;
+
     client = new IPCClient(APP_ID);
     client.setListener(
         new IPCListener() {
@@ -62,8 +62,17 @@ public final class PresenceBuilder {
                 "[OPMod] Discord RPC disconnected: " + (t != null ? t.getMessage() : "null"));
           }
         });
-    client.connect();
-    System.out.println("[OPMod] Attempting Discord RPC connection...");
+
+    new Thread(
+            () -> {
+              try {
+                client.connect();
+                System.out.println("[OPMod] Attempting Discord RPC connection...");
+              } catch (NoDiscordClientException e) {
+                System.err.println("[OPMod] Discord client not found!");
+              }
+            })
+        .start();
 
     ClientLifecycleEvents.CLIENT_STOPPING.register(mc -> stop());
 
@@ -71,15 +80,15 @@ public final class PresenceBuilder {
         mc -> {
           if (!connected) return;
           MinecraftClient client = MinecraftClient.getInstance();
-          if (client == null || client.player == null) {
-            if (!currentState.equals("Im Menü")) {
-              update("Im Menü", "Bereit zum Spielen");
-            }
-            return;
+          if (client == null) return;
+
+          long now = System.currentTimeMillis();
+          if (now - lastUpdate > 15000) {
+            update(currentDetails, currentState);
+            lastUpdate = now;
           }
 
-          ClientWorld world = client.world;
-          if (world == null) {
+          if (client.player == null || client.world == null) {
             if (!currentState.equals("Im Menü")) {
               update("Im Menü", "Bereit zum Spielen");
             }
@@ -89,7 +98,7 @@ public final class PresenceBuilder {
           ClientPlayNetworkHandler handler = client.getNetworkHandler();
           if (handler != null && handler.getServerInfo() != null) {
             String serverName = handler.getServerInfo().name;
-            if (!currentState.equals("Multiplayer") || !currentDetails.contains(serverName)) {
+            if (!currentState.contains(serverName)) {
               update("Spielt auf " + serverName, "Multiplayer");
             }
             return;
@@ -111,15 +120,22 @@ public final class PresenceBuilder {
             .setDetails(details)
             .setState(state)
             .setActivityType(ActivityType.Playing)
-            .setStartTimestamp(System.currentTimeMillis())
+            .setStartTimestamp(System.currentTimeMillis() / 1000L)
             .setLargeImage("opmod_large", "OPMod");
+
     client.sendRichPresence(b.build());
   }
 
   public static void stop() {
     if (client == null) return;
-    client.close();
-    client = null;
-    connected = false;
+    try {
+      client.close();
+      System.out.println("[OPMod] Discord RPC stopped.");
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      client = null;
+      connected = false;
+    }
   }
 }
