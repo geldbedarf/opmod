@@ -22,7 +22,7 @@ public class InventoryFullWarning {
     // man was im Inventar sortiert.
     if (!isInventoryNowFull(mc)
         && !isCooldownOver()
-        && (System.currentTimeMillis() - lastWarningTime) / 1000 > 1) {
+        && (System.currentTimeMillis() - lastWarningTime) / 1000 > 10) {
       System.out.println((System.currentTimeMillis() - lastWarningTime) / 1000);
       lastWarningTime = 0;
     }
