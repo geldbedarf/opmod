@@ -12,10 +12,10 @@
 	"environment": "*",
 	"entrypoints": {
       "main": [
-        "com.example.OPMOD"
+        "dev.opmod.OPMOD"
       ],
 		"client": [
-          "com.example.OPMODClient"
+          "dev.opmod.OPMODClient"
 		]
 	},
   "mixins": [

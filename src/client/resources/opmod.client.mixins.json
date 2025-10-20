@@ -3,8 +3,8 @@
   "package": "com.example.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "GameMessageMixin",
-    "GameMenuScreenMixin"
+    "dev.opmod.mixin.client.GameMessageMixin",
+    "dev.opmod.mixin.client.GameMenuScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
