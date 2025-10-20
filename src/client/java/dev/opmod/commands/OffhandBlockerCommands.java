@@ -1,8 +1,8 @@
 package dev.opmod.commands;
 
-import dev.opmod.config.ConfigManager;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
+import dev.opmod.config.ConfigManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;

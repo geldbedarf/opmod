@@ -1,11 +1,11 @@
 package dev.opmod.commands;
 
-import dev.opmod.TimeTracker;
-import dev.opmod.config.ConfigManager;
-import dev.opmod.jobsystem.tracking.JobData;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import dev.opmod.TimeTracker;
+import dev.opmod.config.ConfigManager;
+import dev.opmod.jobsystem.tracking.JobData;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
