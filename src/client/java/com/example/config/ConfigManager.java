@@ -74,6 +74,6 @@ public class ConfigManager {
     } catch (Exception e) {
       System.err.println("[OPMod] Could not set field '" + fieldName + "': " + e.getMessage());
     }
-      return 0;
+    return 0;
   }
 }

@@ -29,10 +29,10 @@ public class OPMODClient implements ClientModInitializer {
         (dispatcher, registryAccess) -> {
           TrackerCommand.register(dispatcher);
         });
-      ClientCommandRegistrationCallback.EVENT.register(
-              (dispatcher, registryAccess) -> {
-                  InventoryWarningCommands.register(dispatcher);
-              });
+    ClientCommandRegistrationCallback.EVENT.register(
+        (dispatcher, registryAccess) -> {
+          InventoryWarningCommands.register(dispatcher);
+        });
 
     try {
       PresenceBuilder.start();

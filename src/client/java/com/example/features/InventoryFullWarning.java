@@ -2,24 +2,30 @@ package com.example.features;
 
 import com.example.config.ConfigManager;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 
 public class InventoryFullWarning {
 
   private long lastWarningTime = 0;
-  private static final long COOLDOWN_MS = ConfigManager.get().InvFullWarningInterval * 60 * 1000; // Value Minute(n) - *60*1000 formt die Minutenanzahl in ms um.
+  private static final long COOLDOWN_MS =
+      ConfigManager.get().InvFullWarningInterval
+          * 60
+          * 1000; // Value Minute(n) - *60*1000 formt die Minutenanzahl in ms um.
 
   public void tick() {
     if (!isEnabled()) return;
-      MinecraftClient mc = MinecraftClient.getInstance();
-      if (mc == null || mc.player == null) return;
-      // Resetet den Cooldown sobald aus dem Inventar ein Slot frei wird. Jedoch nur wenn mindestens 10 Sekunden nach der letzten Warnung vergangen sind, damit nicht ständig der Sound kommt wenn man was im Inventar sortiert.
-      if (!isInventoryNowFull(mc) && !isCooldownOver() && (System.currentTimeMillis() - lastWarningTime) / 1000 > 1) {
-          System.out.println((System.currentTimeMillis() - lastWarningTime) / 1000);
-          lastWarningTime = 0;
-      }
+    MinecraftClient mc = MinecraftClient.getInstance();
+    if (mc == null || mc.player == null) return;
+    // Resetet den Cooldown sobald aus dem Inventar ein Slot frei wird. Jedoch nur wenn mindestens
+    // 10 Sekunden nach der letzten Warnung vergangen sind, damit nicht ständig der Sound kommt wenn
+    // man was im Inventar sortiert.
+    if (!isInventoryNowFull(mc)
+        && !isCooldownOver()
+        && (System.currentTimeMillis() - lastWarningTime) / 1000 > 1) {
+      System.out.println((System.currentTimeMillis() - lastWarningTime) / 1000);
+      lastWarningTime = 0;
+    }
     if (!isCooldownOver()) return;
 
     if (isInventoryNowFull(mc)) {
@@ -43,11 +49,11 @@ public class InventoryFullWarning {
       return false;
     }
 
-//    for (ItemStack stack : inv.main) {
-//      if (!stack.isEmpty() && stack.getCount() < stack.getMaxCount()) {
-//        return false;
-//      }
-//    }
+    //    for (ItemStack stack : inv.main) {
+    //      if (!stack.isEmpty() && stack.getCount() < stack.getMaxCount()) {
+    //        return false;
+    //      }
+    //    }
 
     return true;
   }
