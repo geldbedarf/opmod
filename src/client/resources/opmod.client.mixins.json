@@ -1,12 +1,13 @@
 {
   "required": true,
-  "package": "com.example.mixin.client",
+  "package": "dev.opmod.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "GameMenuScreenMixin",
     "GameMessageMixin",
-    "GameMenuScreenMixin"
+    "SignCommandMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-	}
+  }
 }

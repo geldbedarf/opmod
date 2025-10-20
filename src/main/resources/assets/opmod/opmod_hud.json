@@ -1,0 +1,15 @@
+{
+  "hud_x": 10,
+  "hud_y": 10,
+  "show_hud": true,
+  "show_job": true,
+  "show_level": true,
+  "show_progress": true,
+  "show_tracking_time": true,
+  "show_time_until_level_up": false,
+  "show_money": true,
+  "show_money_per_hour": true,
+  "show_xp": true,
+  "show_xp_per_hour": true,
+  "show_yaw": false
+}

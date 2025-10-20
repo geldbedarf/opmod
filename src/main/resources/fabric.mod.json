@@ -3,7 +3,7 @@
 	"id": "opmod",
 	"version": "${version}",
 	"name": "OPMOD",
-	"description": "Der OPMod erweitert OPSUCHT um einzigartige Features und Verbesserungen, die dein Spielerlebnis auf das nächste Level bringen.",
+	"description": "Die OPMod erweitert OPSUCHT um einzigartige Features und Verbesserungen, die dein Spielerlebnis auf das nächste Level bringen.",
 	"authors": [
 		"Geldbedarf"
 	],
@@ -12,10 +12,11 @@
 	"environment": "*",
 	"entrypoints": {
       "main": [
-        "com.example.OPMOD"
+        "dev.opmod.OPMOD"
       ],
 		"client": [
-          "com.example.OPMODClient"
+          "dev.opmod.OPMODClient",
+			"dev.opmod.misc.Keybinds"
 		]
 	},
   "mixins": [
