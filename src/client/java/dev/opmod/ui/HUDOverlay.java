@@ -107,7 +107,7 @@ public class HUDOverlay implements HudRenderCallback {
   }
 
   private String formatPerHour(double total) {
-    long seconds = timeTracker.getElapsedSeconds();
+    long seconds = timeTracker.getTime();
     if (seconds == 0) return "0.00";
     return format(total / seconds * 3600);
   }
@@ -118,7 +118,7 @@ public class HUDOverlay implements HudRenderCallback {
     double xpCurrent = xpNeeded * progress;
     double xpLeft = xpNeeded - xpCurrent;
 
-    long seconds = timeTracker.getElapsedSeconds();
+    long seconds = timeTracker.getTime();
     double xpPerHour = seconds > 0 ? jobData.getXp() / seconds * 3600 : 0;
     if (xpPerHour <= 0) return "--:--";
 

@@ -2,11 +2,11 @@ package dev.opmod.jobsystem.tracking;
 
 public class JobData {
 
-  private String jobName = "Unbekannt";
-  private double xp = 0;
-  private double money = 0;
-  private int level = 0;
-  private double percent = 0;
+  private static String jobName = "Unbekannt";
+  private static double xp = 0;
+  private static double money = 0;
+  private static int level = 0;
+  private static double percent = 0;
 
   public void update(String jobName, double xp, double money, int level, double percent) {
     this.jobName = jobName;
@@ -16,7 +16,7 @@ public class JobData {
     this.percent = percent;
   }
 
-  public void reset() {
+  public static void reset() {
     jobName = "Unbekannt";
     xp = 0;
     money = 0;

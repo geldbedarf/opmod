@@ -26,7 +26,7 @@ public class GameMessageMixin {
     // Starte TimeTracker, wenn eine Job-Nachricht erkannt wurde
     if (message.contains("+") && message.contains("XP") && message.contains("$")) {
       TimeTracker tracker = OPMODClient.INSTANCE.getTimeTracker();
-      if (!tracker.isRunning()) tracker.start();
+      tracker.start();
 
       // An PayoutTracker weitergeben (Parsen erledigt dieser)
       OPMODClient.INSTANCE.getPayoutTracker().parseGameMessage(message);

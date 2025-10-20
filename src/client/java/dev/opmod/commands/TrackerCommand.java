@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import dev.opmod.TimeTracker;
+import dev.opmod.jobsystem.tracking.JobData;
 import dev.opmod.misc.Prefix;
 import dev.opmod.settings.Setting;
 import dev.opmod.settings.SettingsManager;
@@ -58,6 +59,8 @@ public class TrackerCommand {
 
   private int reset(CommandContext<FabricClientCommandSource> context) {
     timeTracker.reset();
+    JobData.reset();
+    timeTracker.start();
     send("<green>Tracker wurde zurückgesetzt.</green>");
     return 1;
   }
@@ -69,8 +72,9 @@ public class TrackerCommand {
   }
 
   private int stop(CommandContext<FabricClientCommandSource> context) {
-    timeTracker.pause();
-    send("<yellow>Tracking pausiert.</yellow>");
+    timeTracker.reset();
+    JobData.reset();
+    send("<yellow>Tracking gestoppt.</yellow>");
     return 1;
   }
 
