@@ -13,11 +13,8 @@ public class Keybinds implements ClientModInitializer {
   public void onInitializeClient() {
     String category = "key.category.opmod.general";
 
-    openKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.opmod.open",
-            InputUtil.Type.KEYSYM,
-            GLFW.GLFW_KEY_L,
-            category
-    ));
+    openKey =
+        KeyBindingHelper.registerKeyBinding(
+            new KeyBinding("key.opmod.open", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_L, category));
   }
 }
