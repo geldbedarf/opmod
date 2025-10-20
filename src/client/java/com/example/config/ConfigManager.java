@@ -16,6 +16,10 @@ public class ConfigManager {
     public int hudX = 10;
     public int hudY = 10;
 
+    public boolean enableInvFullWarning = true;
+    public int InvFullWarningInterval = 3;
+    public boolean enableInvFullWarningSound = true;
+
     public boolean showHUD = true;
     public boolean showJob = true;
     public boolean showLevel = true;
@@ -60,7 +64,7 @@ public class ConfigManager {
     return config;
   }
 
-  public static void set(String fieldName, Object value) {
+  public static int set(String fieldName, Object value) {
     try {
       var field = HUDConfig.class.getDeclaredField(fieldName);
       field.setAccessible(true);
@@ -70,11 +74,6 @@ public class ConfigManager {
     } catch (Exception e) {
       System.err.println("[OPMod] Could not set field '" + fieldName + "': " + e.getMessage());
     }
-  }
-
-  public static void setHUDPosition(int x, int y) {
-    config.hudX = x;
-    config.hudY = y;
-    save();
+      return 0;
   }
 }
