@@ -13,68 +13,74 @@ public class InventoryWarningCommands {
 
   public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher) {
     dispatcher.register(
-        ClientCommandManager.literal("InvWarning")
-            // -----------------------------
-            // /InvWarning enable <true|false>
-            // -----------------------------
+        ClientCommandManager.literal("opmod")
             .then(
-                ClientCommandManager.literal("enable")
+                ClientCommandManager.literal("InvFullWarning")
+                    // -----------------------------
+                    // /opmod InvFullWarning enable <true|false>
+                    // -----------------------------
                     .then(
-                        ClientCommandManager.argument("value", BoolArgumentType.bool())
+                        ClientCommandManager.literal("enable")
+                            .then(
+                                ClientCommandManager.argument("value", BoolArgumentType.bool())
+                                    .executes(
+                                        context -> {
+                                          boolean value =
+                                              BoolArgumentType.getBool(context, "value");
+                                          ConfigManager.set("enableInvFullWarning", value);
+
+                                          sendMessage("Inventory Warning", value);
+                                          return 1;
+                                        })))
+                    // -----------------------------
+                    // /opmod InvFullWarning interval <number>
+                    // -----------------------------
+                    .then(
+                        ClientCommandManager.literal("interval")
+                            .then(
+                                ClientCommandManager.argument(
+                                        "value", IntegerArgumentType.integer(1))
+                                    .executes(
+                                        context -> {
+                                          int value =
+                                              IntegerArgumentType.getInteger(context, "value");
+                                          ConfigManager.set("InvFullWarningInterval", value);
+
+                                          sendMessage("Inventory Warning Interval", value);
+                                          return 1;
+                                        })))
+                    // -----------------------------
+                    // /opmod InvFullWarning sound <true|false>
+                    // -----------------------------
+                    .then(
+                        ClientCommandManager.literal("sound")
+                            .then(
+                                ClientCommandManager.argument("value", BoolArgumentType.bool())
+                                    .executes(
+                                        context -> {
+                                          boolean value =
+                                              BoolArgumentType.getBool(context, "value");
+                                          ConfigManager.set("enableInvFullWarningSound", value);
+
+                                          sendMessage("Inventory Warning Sound", value);
+                                          return 1;
+                                        })))
+                    // -----------------------------
+                    // /opmod InvFullWarning reset
+                    // -----------------------------
+                    .then(
+                        ClientCommandManager.literal("reset")
                             .executes(
                                 context -> {
-                                  boolean value = BoolArgumentType.getBool(context, "value");
-                                  ConfigManager.set("enableInvFullWarning", value);
+                                  ConfigManager.set("enableInvFullWarning", true);
+                                  ConfigManager.set("InvFullWarningInterval", 3);
+                                  ConfigManager.set("enableInvFullWarningSound", true);
 
-                                  sendMessage("Inventory Warning", value);
+                                  sendMessage("Inventory Warning", true);
+                                  sendMessage("Inventory Warning Interval", 3);
+                                  sendMessage("Inventory Warning Sound", true);
                                   return 1;
-                                })))
-            // -----------------------------
-            // /InvWarning interval <number>
-            // -----------------------------
-            .then(
-                ClientCommandManager.literal("interval")
-                    .then(
-                        ClientCommandManager.argument("value", IntegerArgumentType.integer(1))
-                            .executes(
-                                context -> {
-                                  int value = IntegerArgumentType.getInteger(context, "value");
-                                  ConfigManager.set("InvFullWarningInterval", value);
-
-                                  sendMessage("Inventory Warning Interval", value);
-                                  return 1;
-                                })))
-            // -----------------------------
-            // /InvWarning sound <true|false>
-            // -----------------------------
-            .then(
-                ClientCommandManager.literal("sound")
-                    .then(
-                        ClientCommandManager.argument("value", BoolArgumentType.bool())
-                            .executes(
-                                context -> {
-                                  boolean value = BoolArgumentType.getBool(context, "value");
-                                  ConfigManager.set("enableInvFullWarningSound", value);
-
-                                  sendMessage("Inventory Warning Sound", value);
-                                  return 1;
-                                })))
-            // -----------------------------
-            // /InvWarning reset
-            // -----------------------------
-            .then(
-                ClientCommandManager.literal("reset")
-                    .executes(
-                        context -> {
-                          ConfigManager.set("enableInvFullWarning", true);
-                          ConfigManager.set("InvFullWarningInterval", 3);
-                          ConfigManager.set("enableInvFullWarningSound", true);
-
-                          sendMessage("Inventory Warning", true);
-                          sendMessage("Inventory Warning Interval", 3);
-                          sendMessage("Inventory Warning Sound", true);
-                          return 1;
-                        })));
+                                }))));
   }
 
   private static void sendMessage(String option, boolean value) {

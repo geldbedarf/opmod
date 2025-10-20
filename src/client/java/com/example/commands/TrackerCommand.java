@@ -18,7 +18,7 @@ public class TrackerCommand {
         dispatcher.register(
             ClientCommandManager.literal("opmod")
                 .then(
-                    ClientCommandManager.literal("tracker")
+                    ClientCommandManager.literal("Tracker")
 
                         // -----------------------------
                         // /tracker reset

@@ -6,11 +6,12 @@
 package com.example;
 
 import com.example.commands.InventoryWarningCommands;
+import com.example.commands.OffhandBlockerCommands;
 import com.example.commands.TrackerCommand;
 import com.example.features.InventoryFullWarning;
+import com.example.features.OffhandBlocker;
 import com.example.misc.PresenceBuilder;
 import com.example.ui.HUDOverlay;
-import com.jagrosh.discordipc.exceptions.NoDiscordClientException;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -24,6 +25,10 @@ public class OPMODClient implements ClientModInitializer {
   public void onInitializeClient() {
     HUDOverlay.init();
 
+    // OffhandBlocker instanziieren
+    OffhandBlocker offhandBlocker = new OffhandBlocker();
+    offhandBlocker.register();
+
     // Commands registrieren
     ClientCommandRegistrationCallback.EVENT.register(
         (dispatcher, registryAccess) -> {
@@ -33,12 +38,12 @@ public class OPMODClient implements ClientModInitializer {
         (dispatcher, registryAccess) -> {
           InventoryWarningCommands.register(dispatcher);
         });
+    ClientCommandRegistrationCallback.EVENT.register(
+        (dispatcher, registryAccess) -> {
+          OffhandBlockerCommands.register(dispatcher);
+        });
 
-    try {
-      PresenceBuilder.start();
-    } catch (NoDiscordClientException e) {
-      throw new RuntimeException(e);
-    }
+    PresenceBuilder.start();
 
     // InventoryFullWarning instanziieren
     this.inventoryFullWarning = new InventoryFullWarning();

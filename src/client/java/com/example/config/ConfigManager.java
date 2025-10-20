@@ -20,6 +20,8 @@ public class ConfigManager {
     public int InvFullWarningInterval = 3;
     public boolean enableInvFullWarningSound = true;
 
+    public boolean enableOffhandBlocker = true;
+
     public boolean showHUD = true;
     public boolean showJob = true;
     public boolean showLevel = true;

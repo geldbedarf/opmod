@@ -64,7 +64,7 @@ public class InventoryFullWarning {
     MinecraftClient mc = MinecraftClient.getInstance();
     if (mc == null || mc.player == null) return;
 
-    mc.inGameHud.setTitleTicks(0, 40, 0);
+    mc.inGameHud.setTitleTicks(0, 60, 15);
     mc.inGameHud.setTitle(Text.of("§cInventar voll!"));
 
     if (ConfigManager.get().enableInvFullWarningSound) {
